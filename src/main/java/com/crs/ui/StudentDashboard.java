@@ -23,7 +23,6 @@ import java.util.List;
 
 public class StudentDashboard {
     private final Stage stage;
-    private final User user;
     private final Student student;
     private final CourseDAO courseDAO = new CourseDAO();
     private final EnrollmentDAO enrollmentDAO = new EnrollmentDAO();
@@ -31,7 +30,6 @@ public class StudentDashboard {
 
     public StudentDashboard(Stage stage, User user) {
         this.stage = stage;
-        this.user = user;
         StudentDAO studentDAO = new StudentDAO();
         this.student = studentDAO.findByUserId(user.getId());
     }
@@ -80,7 +78,7 @@ public class StudentDashboard {
         TableColumn<Course, String> colCredits = new TableColumn<>("Credits");
         colCredits.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getCredits())));
 
-        table.getColumns().addAll(colTitle, colDept, colCredits);
+        table.getColumns().addAll(List.of(colTitle, colDept, colCredits));
 
         List<Course> courses = courseDAO.findAll(Course.class);
         ObservableList<Course> data = FXCollections.observableArrayList(courses);
@@ -123,7 +121,7 @@ public class StudentDashboard {
         TableColumn<Enrollment, String> colGrade = new TableColumn<>("Grade");
         colGrade.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getGrade() != null ? data.getValue().getGrade() : "N/A"));
 
-        table.getColumns().addAll(colCourse, colSemester, colStatus, colGrade);
+        table.getColumns().addAll(List.of(colCourse, colSemester, colStatus, colGrade));
 
         Runnable refreshRecords = () -> {
             List<Enrollment> enrollments = enrollmentDAO.findByStudentId(student.getId());

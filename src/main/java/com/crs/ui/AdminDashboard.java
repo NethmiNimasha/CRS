@@ -67,7 +67,7 @@ public class AdminDashboard {
         TableColumn<Course, String> colCapacity = new TableColumn<>("Max Capacity");
         colCapacity.setCellValueFactory(data -> new SimpleStringProperty(String.valueOf(data.getValue().getMaxCapacity())));
 
-        table.getColumns().addAll(colTitle, colDept, colCredits, colCapacity);
+        table.getColumns().addAll(List.of(colTitle, colDept, colCredits, colCapacity));
 
         Runnable refreshTable = () -> {
             List<Course> courses = courseDAO.findAll(Course.class);

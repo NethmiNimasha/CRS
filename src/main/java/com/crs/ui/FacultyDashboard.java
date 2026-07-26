@@ -20,13 +20,11 @@ import java.util.List;
 
 public class FacultyDashboard {
     private final Stage stage;
-    private final User user;
     private final Faculty faculty;
     private final EnrollmentDAO enrollmentDAO = new EnrollmentDAO();
 
     public FacultyDashboard(Stage stage, User user) {
         this.stage = stage;
-        this.user = user;
         FacultyDAO facultyDAO = new FacultyDAO();
         this.faculty = facultyDAO.findByUserId(user.getId());
     }
@@ -76,7 +74,7 @@ public class FacultyDashboard {
         TableColumn<Enrollment, String> colGrade = new TableColumn<>("Grade");
         colGrade.setCellValueFactory(data -> new SimpleStringProperty(data.getValue().getGrade() != null ? data.getValue().getGrade() : "N/A"));
 
-        table.getColumns().addAll(colStudent, colCourse, colSemester, colStatus, colGrade);
+        table.getColumns().addAll(List.of(colStudent, colCourse, colSemester, colStatus, colGrade));
 
         // For simplicity, showing all enrollments across the system. 
         // In a full implementation, you would filter by courses taught by this faculty.
